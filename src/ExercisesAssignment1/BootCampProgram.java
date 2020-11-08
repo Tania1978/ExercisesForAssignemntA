@@ -164,7 +164,7 @@ public class BootCampProgram {
         return bootcamp;
     }
 
-    public static void create(int number) {
+    public static ArrayList<BootCamp>  create(int number) {
         System.out.println("Welcome! In this program you will be asked to create " + number + " different Bootcamp courses by entering their name(title), "
                 + "staritng date and ending date.");
         while (bootcampNumber < number + 1) {
@@ -172,9 +172,74 @@ public class BootCampProgram {
             bootcamps.add(newBootCamp);
             bootcampNumber++;
         }
+        System.out.println(" ");
         System.out.println("You successfully entered the following Bootcamps: ");
+        System.out.println(" ");
         for (BootCamp b : bootcamps) {
             BootCamp.printBootCamp(b);
         }
+        return bootcamps;
+    }
+    
+    public static void hasBootCamp(ArrayList<BootCamp> bootcamps) {
+        BootCamp searchB = new BootCamp();
+        searchB.setName("");
+        String search = "";
+        boolean searchMore = true;
+        while (searchMore) {
+            System.out.println(" ");
+            System.out.println("Please enter a date to search for available BootCamps: ");
+            LocalDate inquiry = enterDate(search, searchB);
+            String stD = inquiry.format(formatDate);
+            System.out.println("The date you entered is " + stD);
+
+            //check if available
+            int sum=0;
+            for (BootCamp b : bootcamps) {
+                String bStD = b.getStartingDate().format(formatDate);
+                String bEnD = b.getEndingDate().format(formatDate);
+                if ((inquiry.isAfter(b.getStartingDate())) && (inquiry.isBefore(b.getEndingDate()))) {
+                    System.out.println("Bootcamp " + b.getName() + "  will be available in " + stD + " It starts " + bStD + " and ends " + bEnD);
+                    sum+=1;
+                }      
+            }
+            if(sum==0){
+             System.out.println("Sorry no bootcamp available in " + stD);   
+            }
+            System.out.println("Would you like to search for another date? ");
+            boolean toSearch = true;
+            while (toSearch) {
+                System.out.println("Please enter 0: NO or 1: YES ");
+                if (!sc.hasNextInt()) {
+                    System.out.println("Only integer numbers are allowed. ");
+                    toSearch = true;
+                    sc.next();
+                    continue;
+                }
+                int choice = sc.nextInt();
+                if ((choice != 0) && (choice != 1)) {
+                    System.out.println("Invalid choice. ");
+                    toSearch = true;
+                    continue;
+                }
+                switch (choice) {
+                    case 0:
+                        System.out.println("Thank you for using our program! Goodbye.");
+                        toSearch = false;
+                        searchMore = false;
+                        break;
+                    case 1:
+                        toSearch = false;
+                        searchMore = true;
+                        break;
+                }
+            }
+        }
+
+    }
+
+    public static void bootCampSearch(int number) {
+        ArrayList<BootCamp> bootcamps = create(number);
+        hasBootCamp(bootcamps);
     }
 }

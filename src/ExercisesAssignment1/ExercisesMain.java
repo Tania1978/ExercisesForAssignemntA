@@ -10,9 +10,6 @@ public class ExercisesMain {
         //Family.printFamilyDetails();
         
         // to run Exercise Number 3 please remove the comment lines below:
-         //BootCampProgram.create(3);      
-        
-        //I could have entered more tests, check for weekend day, or give options to edit entered data. will do so in the assignment.
-        //Thank you!
+         //BootCampProgram.bootCampSearch(3);     
 }
 }
